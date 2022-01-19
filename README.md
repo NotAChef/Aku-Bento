@@ -1,4 +1,4 @@
-# Aku-Bento (Awful Lunch Box)
+# Aku-Bento (Evil Lunch Box)
 悪弁当(Aku bentō) is a project for a lunch box that contains an ESP32 used for beacon flooding
 
 ## Materials required <br>
