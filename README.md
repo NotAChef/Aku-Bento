@@ -6,6 +6,15 @@
 * WEMOS D1 R1 (ESP8266) or any generic ESP8266<br>
 * A $2 plastic lunch box <br>
 
+## Connection Diagram <br>
+<img src="Assets/circuit diagram.png" width="700dp">
+
+## Connections <br>
+ESP32 &nbsp; ----> ESP8266 <br>
+VIN &nbsp; &nbsp; &nbsp; ----> 5V <br>
+GND &nbsp; &nbsp; ----> GND <br>
+GPIO13 ----> D7 <br>
+
 ## Disclaimer  
 Even if it is more of a fun party trick than something that could actually do any harm, please use it respectfully! Some people might interpret this as a "Jammer" and those are illegal. But this project is just sending a bunch of WiFi packets through the air and works within the 802.11 Wi-Fi standard.
 
