@@ -9,11 +9,17 @@
 ## Connection Diagram <br>
 <img src="Assets/circuit diagram.png" width="700dp">
 
-## Connections <br>
+## Pin Connections <br>
 ESP32 &nbsp; ----> ESP8266 <br>
 VIN &nbsp; &nbsp; &nbsp; ----> 5V <br>
 GND &nbsp; &nbsp; ----> GND <br>
 GPIO13 ----> D7 <br>
+
+## Instructions <br>
+1. Flash your ESP32 with ESP32_CODE.ino using Arduino IDE
+2. Flash your ESP8266 with ESP8266_CODE.ino using Arduino IDE
+3. Connect the pins according to the Pin Connections above
+4. Use a BLE scanner and send text "HIGH" to activate the spammer and any other value to deactivate it
 
 ## Disclaimer  
 Even if it is more of a fun party trick than something that could actually do any harm, please use it respectfully! Some people might interpret this as a "Jammer" and those are illegal. But this project is just sending a bunch of WiFi packets through the air and works within the 802.11 Wi-Fi standard.
