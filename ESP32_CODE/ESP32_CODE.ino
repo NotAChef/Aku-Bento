@@ -13,18 +13,27 @@
 #define SERVICE_UUID        "00069420-0000-1000-8000-00805F9B34FB"
 #define CHARACTERISTIC_UUID "00002022-0000-1000-8000-00805F9B34FB"
 
+bool deviceConnected = false;
+BLEServer *pServer = NULL;
+
+class MyServerCallbacks: public BLEServerCallbacks {
+    void onConnect(BLEServer* pServer) {
+      deviceConnected = true;
+    };
+
+    void onDisconnect(BLEServer* pServer) {
+      deviceConnected = false;
+    }
+};
 
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
       std::string value = pCharacteristic->getValue();
-
       if (value == "HIGH") {
         digitalWrite(13,HIGH);
       }else{
         digitalWrite(13,LOW);
       }
-
-      
     }
 };
 
@@ -38,7 +47,8 @@ void setup() {
   Serial.println("5- See the magic =)");
 
   BLEDevice::init("悪弁当");
-  BLEServer *pServer = BLEDevice::createServer();
+  pServer = BLEDevice::createServer();
+  pServer->setCallbacks(new MyServerCallbacks());
 
   BLEService *pService = pServer->createService(SERVICE_UUID);
 
@@ -52,15 +62,20 @@ void setup() {
 
   pCharacteristic->setValue("LOW");
   pService->start();
-
-  BLEAdvertising *pAdvertising = pServer->getAdvertising();
-  pAdvertising->start();
-
+  BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
+  pAdvertising->addServiceUUID(SERVICE_UUID);
+  pAdvertising->setScanResponse(true);
+  pAdvertising->setMinPreferred(0x06);  // functions that help with iPhone connections issue
+  pAdvertising->setMinPreferred(0x12);
+  BLEDevice::startAdvertising();
   pinMode(13,OUTPUT);
   digitalWrite(13,LOW);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  delay(2000);
+    if (!deviceConnected) {
+        delay(500); // give the bluetooth stack the chance to get things ready
+        pServer->startAdvertising(); // restart advertising
+        Serial.println("start advertising");
+    }
 }
